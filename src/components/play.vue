@@ -2,15 +2,15 @@
   <div class="player pa">
     <div class="control pa">
       <span class="loop">
-        <img :src="loop_i_a" v-if="loop_s" @click="loop_single">
-        <img :src="loop_i_s" v-else @click="loop_list">
+        <img :src="loop_i_a" v-if="loop_s" @click="">
+        <img :src="loop_i_s" v-else @click="">
       </span>
       <span @click="prev">
         <img :src="prev_i" class="prev">
       </span>
       <span>
-        <img :src="play_i" class="play" v-if="play" @click="show">
-        <img :src="stop_i" class="stop" v-else="" @click="stop">
+        <img :src="play_i" class="play" v-if="play" @click="play_">
+        <img :src="stop_i" class="stop" v-else @click="stop">
       </span>
       <span @click="next">
         <img :src="next_i" class="next">
@@ -19,9 +19,9 @@
         <img :src="musicList_i" class="list">
       </span>
     </div>
-    <audio :src="musicUrl[0]" ref="song" @ended="next"></audio>
+    <audio :src="music_url_default" ref="song" @ended="next"></audio>
     <div class="panel pa">
-      <p class="name"></p>
+      <p class="song_info">{{music_name}} - {{music_author}}</p>
       <div class="progress">
         <div ref="range" class="pr"></div>
       </div>
@@ -30,11 +30,17 @@
 </template>
 
 <script>
+
 export default {
   name: 'music',
   data () {
     return {
-      musicUrl: ['../../static/music1.mp3','../../static/music2.mp3','../../static/music3.mp3'],
+      url1:'../../static/music_data.json',
+      music_author:'未知',
+      music_name:'未知',
+      music_url_default:'',
+      music_list:[],
+      music_len:0,
       value:0,
       timer:0,
       play:true,
@@ -60,64 +66,79 @@ export default {
       musicList_i:'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNDk1NjE3NTgzMTAxIiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjE0NzIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNODcwLjQgMTUzLjZsMC0xMDIuNC03NjggMCAwIDEwMi40IDc2OCAwek04NzAuNCAzNTguNGwwLTEwMi40LTc2OCAwIDAgMTAyLjQgNzY4IDB6TTUxMiA1NjMuMmwwLTEwMi40LTQwOS42IDAgMCAxMDIuNCA0MDkuNiAwek04OTMuNDQgNDYyLjg0OGwtMzA3LjIgNTcuMzQ0Yy04LjE5MiAxLjAyNC05LjcyOCAxLjUzNi0xNC44NDggNi42NTYtNS42MzIgNC42MDgtOC4xOTIgMTEuMjY0LTguMTkyIDE4Ljk0NGwwIDIzNS4wMDhjLTE0Ljg0OC02LjY1Ni0zMy43OTItNy4xNjgtNDcuNjE2LTcuMTY4LTI3LjY0OCAwLTUxLjIgOS43MjgtNzAuNjU2IDI5LjE4NHMtMjguNjcyIDQzLjAwOC0yOC42NzIgNzAuNjU2YzAgMjcuMTM2IDkuMjE2IDUwLjY4OCAyOC42NzIgNzAuMTQ0czQzLjAwOCAyOS4xODQgNzAuNjU2IDI5LjE4NGMyNS4wODggMCA0Ny4xMDQtOC4xOTIgNjYuMDQ4LTI0LjU3NnMzMC4yMDgtMzYuMzUyIDMzLjI4LTYwLjkyOGwwLTI1My40NCAyNTUuNDg4LTU2LjgzMiAwIDE3OC4xNzZjLTE0Ljg0OC02LjY1Ni0yOC42NzItOS43MjgtNDIuNDk2LTkuNzI4LTI3LjY0OCAwLTU2LjgzMiA5LjcyOC03Ni4yODggMjkuMTg0LTE5LjQ1NiAxOC45NDQtMjkuMTg0IDQyLjQ5Ni0yOS4xODQgNzAuMTQ0czkuNzI4IDUwLjY4OCAyOS4xODQgNzAuMTQ0IDQzLjAwOCAyOS4xODQgNzAuNjU2IDI5LjE4NGMyNy4xMzYgMCA1MC42ODgtOS43MjggNzAuMTQ0LTI5LjE4NHMyOS4xODQtNDIuNDk2IDI5LjE4NC03MC4xNDRsMC0zNTMuMjhjMC04LjE5Mi0yLjU2LTE1LjM2LTguMTkyLTIwLjk5Mi01LjYzMi02LjE0NC0xMi4yODgtOC43MDQtMTkuOTY4LTcuNjh6TTQwOS42IDc2OGwwLTEwMi40LTMwNy4yIDAgMCAxMDIuNCAzMDcuMiAwek0zMDcuMiA5NzIuOGwwLTEwMi40LTIwNC44IDAgMCAxMDIuNCAyMDQuOCAweiIgcC1pZD0iMTQ3MyIgZmlsbD0iI2ZmZmZmZiI+PC9wYXRoPjwvc3ZnPg=='
     }
   },
-  mounted(){
-    this.range()
+  created(){
+      this.all()
   },
   beforeDestroy(){
     clearInterval(this.timer)
   },
   methods:{
-    //播放
-    show(){
-      this.$refs.song.play()
-      this.play =!this.play
-    },
-   //暂停
-    stop(){
-      this.$refs.song.pause()
-      this.play = !this.play
-    },
-    //下一首
-    next(){
-      this.range()
-      this.value++
-      if(this.play != false) this.play = false
-  
-  
-      if(this.value >= this.musicUrl.length) this.value = 0
-    
-      this.$refs.song.src = this.musicUrl[this.value]
-    
-      this.$refs.song.play()
-    },
-    //上一首
-    prev(){
-      this.value--
-      if(this.play != false) this.play = false
-      
-      if(this.value < 0) this.value = this.musicUrl.length - 1
-    
-      this.$refs.song.src = this.musicUrl[this.value]
-    
-      this.$refs.song.play()
-    },
-    //单曲循环
-    loop_single(){
-    
-    },
-    //列表循环
-    loop_list(){
-      
-    },
-    //进度条
-    range(){
-      console.log('出发range')
-      this.timer = setInterval(()=>{
-        let progressBar = (this.$refs.song.currentTime / this.$refs.song.duration)
-        this.$refs.range.style.width = progressBar * 100 + '%'
-        if(progressBar === 1) clearInterval(this.timer) , this.$refs.range.style.width = 0
-      },1)
-    }
+      //加载歌曲
+      all(){
+          this.$http.get(this.url1)
+              .then((res)=>{
+                    this.music_list = res.data.music
+                    this.music_len = this.music_list.length
+                  let roll = parseInt(Math.random() * this.music_len)
+                    this.music_url_default = this.music_list[roll].url
+                  this.music_name = this.music_list[roll].name
+                  this.music_author = this.music_list[roll].author
+
+              })
+      },
+      show_music_info(){
+          this.music_name = this.music_list[this.value].name
+          this.music_author = this.music_list[this.value].author
+          console.log(this.music_name + '  --  ' + this.music_author)
+      },
+      play_(){
+          this.play = false
+          this.$refs.song.play()
+          this.range()
+      },
+      stop(){
+          this.play = true
+          this.$refs.song.pause()
+          clearInterval(this.timer)
+      },
+      next(){
+          setTimeout(()=>{
+              this.range()
+              this.value++
+              if(this.play != false) this.play = false
+              if(this.value >= this.music_list.length) this.value = 0
+              this.show_music_info()
+              this.$refs.song.src = this.music_list[this.value].url
+              this.$refs.song.play()
+          },333)
+      },
+      prev(){
+          setTimeout(()=>{
+              this.range()
+              this.value--
+              if(this.play != false) this.play = false
+              if(this.value < 0) this.value = this.music_len - 1
+              this.show_music_info()
+              this.$refs.song.src = this.music_list[this.value].url
+              this.$refs.song.play()
+          },333)
+      },
+      //进度条
+      range(){
+          this.timer = setInterval(()=>{
+            let progressBar = this.$refs.song.currentTime / this.$refs.song.duration
+              this.$refs.range.style.width = progressBar * 100 + '%'
+              if(progressBar === 1) {
+                  clearInterval(this.timer)
+                  this.$refs.range.style.width = 0
+                  this.play = false
+              }
+
+          },33)
+      }
+
+
+
   },
 }
 </script>
@@ -177,5 +198,15 @@ export default {
   .control span .play, .control span .stop{
     width: 40px;
     height: 40px;
+  }
+
+  /*歌曲信息*/
+  .song_info{
+    font-size:10px;
+    line-height: 20px;
+    color:#fff;
+    overflow: hidden;
+    white-space:nowrap;
+    height: 20px;
   }
 </style>
