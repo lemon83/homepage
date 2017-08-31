@@ -1,0 +1,5 @@
+sudo iptables -L
+查看本机是否设置istables规则 禁止ssh的连入/连出
+
+若没有看到被允许
+sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
