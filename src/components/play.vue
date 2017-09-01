@@ -185,6 +185,11 @@ export default {
     transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
+    transition:all .6s cubic-bezier(.4,0,0,1);
+    opacity:0;
+  }
+  .control:hover{
+      opacity: 1;
   }
   .control span{
     margin:0 5px;
