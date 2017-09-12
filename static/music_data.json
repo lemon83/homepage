@@ -1,7 +1,7 @@
 {
   "music":[
     {
-      "name":"むすんでひらいて (#5 『お留守番!』Mix) - remix",
+      "name":"むすんでひらいて",
       "author":"放課後ティータイム",
       "url":"../../static/music1.mp3"
     },
@@ -14,6 +14,11 @@
       "name":"歌に形はないけれど",
       "author":"山根万理奈",
       "url":"../../static/music3.mp3"
+    },
+    {
+      "name":"エウテルペ ~Silence~",
+      "author":"EGOIST",
+      "url":"../../static/music4.mp3"
     }
   ]
 
