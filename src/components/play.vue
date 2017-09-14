@@ -9,7 +9,7 @@
         <img :src="prev_i" class="prev">
       </span>
       <span>
-        <img :src="play_i" class="play" v-if="noplay" @click="play_">
+        <img :src="play_i" class="play" v-if="play" @click="play_">
         <img :src="stop_i" class="stop" v-else @click="stop">
       </span>
       <span @click="next">
@@ -26,7 +26,8 @@
            id="audio"
     ></audio>
     <div class="panel pa">
-      <p class="song_info">{{music_name}} - {{music_author}}</p>
+      <p class="song_info"
+      >{{music_name}} - {{music_author}}</p>
       <div class="progress">
         <div ref="range" class="pr"></div>
       </div>
@@ -54,7 +55,7 @@ export default {
     }
   },
 	computed:{
-		//控制器
+		//一些图标
     a(){
         return store.getters.loop_single
     },
@@ -76,21 +77,39 @@ export default {
     musicList_i(){
     	return store.getters.list
     },
-        noplay(){
-    	return store.getters.noplay
+        name(){
+			return store.getters.name
+		},
+		author(){
+			return store.getters.author
+		},
+        index(){
+			return store.getters.index
+        },
+        url(){
+        	return store.getters.url
         }
   },
   created(){
       this.all()
   },
     updated(){
+  	console.log('play组件中当前歌曲index: ' + this.value,'state中当前歌曲index: ' + this.$store.getters.index)
 	    this.getInfo({
-		    name:this.music_name,
-		    author:this.music_author,
-		    url:this.music_list[this.value].url,
+		    name:this.name,
+		    author:this.author,
+		    url:this.url,
 		    length:this.music_len,
-            index:this.value
+            index:this.index
 	    })
+    },
+    watch:{
+    	name(a,b){
+    		this.music_name = a
+        },
+        author(a,b){
+    		this.music_author = a
+        }
     },
   methods:{
       ...mapActions([
@@ -111,14 +130,16 @@ export default {
                   this.music_url_default = this.music_list[roll].url
                   this.music_name = this.music_list[roll].name
                   this.music_author = this.music_list[roll].author
-                  
               })
       },
       //歌曲信息
       show_music_info(){
           this.music_name = this.music_list[this.value].name
           this.music_author = this.music_list[this.value].author
-	      console.log('url:  ' + this.music_list[this.value].url + ';  name:  ' + this.music_name + ';  author:  ' + this.music_author)
+//		      this.music_name = this.music_list[this.index].name
+//		      this.music_author = this.music_list[this.index].author
+//          this.music_url_default = this.music_list[this.value].url
+//	      console.log('url:  ' + this.music_list[this.value].url + ';  name:  ' + this.music_name + ';  author:  ' + this.music_author)
       },
       play_(){
 //	      this.getMusic(this.music_list)
@@ -163,8 +184,6 @@ export default {
               }
           },33)
       }
-
-
 
   },
 }
