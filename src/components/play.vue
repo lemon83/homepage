@@ -88,20 +88,20 @@ export default {
         },
         url(){
         	return store.getters.url
-        }
+        },
   },
   created(){
       this.all()
   },
     updated(){
-  	console.log('play组件中当前歌曲index: ' + this.value,'state中当前歌曲index: ' + this.$store.getters.index)
-	    this.getInfo({
-		    name:this.name,
-		    author:this.author,
-		    url:this.url,
-		    length:this.music_len,
-            index:this.index
-	    })
+	    console.log('play组件中当前歌曲index: ' + this.value,'state中当前歌曲index: ' + this.index)
+		    this.getInfo({
+			    name:this.music_name,
+			    author:this.music_author,
+			    url:this.music_url_default,
+			    length:this.music_len,
+			    index:this.value
+		    })
     },
     watch:{
     	name(a,b){
@@ -109,6 +109,9 @@ export default {
         },
         author(a,b){
     		this.music_author = a
+        },
+        index(a,b){
+          this.value = a
         }
     },
   methods:{
@@ -232,7 +235,7 @@ export default {
     display: flex;
     justify-content: space-between;
     transition:all .6s cubic-bezier(.4,0,0,1);
-    opacity:0;
+    /*opacity:0;*/
   }
   .control:hover{
       opacity: 1;

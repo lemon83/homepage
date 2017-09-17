@@ -7,7 +7,6 @@ sudo iptables -L
 
 若没有看到被允许
 ```
-
 sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
 ```
 
@@ -15,4 +14,13 @@ sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
 ```
 cd /var/log
 less secure
+```
+
+* 更改ssh配置文件
+```
+vi /etc/ssh/sshd_config
+```
+保存后重启OpenSSH服务器
+``` 
+/etc/init.d/sshd restart
 ```

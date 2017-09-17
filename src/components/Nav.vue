@@ -1,13 +1,13 @@
 <template>
   <div class="mask pa">
     <div class="logo text">
-      <a class="index" href="/" @click="con">
-        <img :src="musicList.icon_logo" alt="" @click.stop.prevent="con">
-      </a>
+      <router-link to="/" class="index" href="/">
+        <img :src="logo" alt="">
+      </router-link>
       <div class="nav tc">
-        <a :href="nav.index" @click.prevent.stop="">笔记</a> /
-        <a :href="nav.playlist" @click.prevent.stop="">音乐</a> /
-        <a :href="nav.about" @click.prevent.stop="">关于</a>
+        <router-link to="/">笔记</router-link> /
+        <router-link to="/playlist">音乐</router-link> /
+        <router-link to="/about">关于</router-link>
       </div>
     </div>
     <div class="music-content">
@@ -20,38 +20,30 @@
 
 <script>
 import music from './play'
+import store from '../vuex/store'
 export default {
   name: 'nav',
   components:{
     music,
   },
-  data () {
-    return {
-      musicList:{
-        icon_logo:'data:image/svg+xml;base64,CjxzdmcgdmVyc2lvbj0iMS4xIgogICAgYmFzZVByb2ZpbGU9ImZ1bGwiCiAgICB3aWR0aD0iMTM0\n' +
-        'IiBoZWlnaHQ9IjMwIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCgo8\n' +
-        'dGV4dCB4PSIiIHk9IjI4IiBmb250LXNpemU9IjI4IiBkb21pbmFudC1iYXNlbGluZT0idG9wIiBm\n' +
-        'aWxsPSJ3aGl0ZSI+TEVNT044MzwvdGV4dD4KPC9zdmc+Cg==',
-        icon_loop:''
-      },
-      
-      nav:{
-        index:'/',
-        playlist:'/playlist/',
-        about:'/about/'
+    data(){
+      return {
+          receive:''
       }
-  
-  }
-  },
-  methods:{
-    con(e){
-      console.log(e)
+    },
+    mounted(){
+    	this.$on('author',(data) =>{
+    		this.receive = data
+        })
+    },
+    computed:{
+  	  logo(){
+  	  	return store.getters.getLogo
+      }
     }
-  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .mask{
     display: flex;
@@ -74,9 +66,6 @@ export default {
     color: white;
     font-family: Verdana;
   }
-  .index{
-    display: inline-block;
-  }
   .nav{
     color:#fff;
     font-size:1rem;
@@ -86,7 +75,7 @@ export default {
   .nav a {
     color:#fff;
   }
-  播放器
+  /*播放器*/
   .music-content{
     align-self: flex-end;
     width: 100px;
