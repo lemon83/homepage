@@ -1,15 +1,18 @@
 <template>
-	<div>
-		这是笔记内容
+	<div class="note">
+		<code>
+			ssh
+		</code>
 	</div>
 </template>
 
 <script>
+	
 	export default {
 		name:'notes',
 		data(){
 			return {
-			
+				arr:[]
 			}
 		},
 		created(){
@@ -20,3 +23,9 @@
 		}
 	}
 </script>
+
+<style scoped>
+	#circle{
+		border:1px solid salmon;
+	}
+</style>

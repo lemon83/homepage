@@ -23,6 +23,7 @@ export const getInfo = (state,payload) =>{
 	state.music.url = payload.url
 	state.music.length = payload.length
 	state.music.index = payload.index
+	state.music.isPlay = payload.isPlay
 	console.log('获取时间 : ' + new Date().getHours() + '时 ' + new Date().getMinutes() + '分 ' + new Date().getSeconds() + '秒')
 	console.log('提交成功')
 	console.log(state.music)

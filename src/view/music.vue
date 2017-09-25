@@ -16,7 +16,7 @@
 		name:'music',
 		data(){
 			return {
-			
+				play:false
 			}
 		},
 		computed:{
@@ -37,7 +37,7 @@
 			},
 			list(){
 				return store.getters.list_m
-			}
+			},
 		},
 		created(){
 			//初始化
@@ -56,6 +56,7 @@
 				'getInfo'
 			]),
 			changeMusic(i){
+				this.play = true
 				this.changeIndex(i)
 				let audio = document.querySelector('#audio')
 				audio.src = this.list[i].url
@@ -66,7 +67,8 @@
 					author:this.list[i].author,
 					length:this.length,
 					url:this.list[i].url,
-					index:i
+					index:i,
+					isPlay:this.play
 				})
 			}
 		}

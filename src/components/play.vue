@@ -9,14 +9,16 @@
         <img :src="prev_i" class="prev">
       </span>
       <span>
-        <img :src="play_i" class="play" v-if="play" @click="play_">
+        <img :src="play_i" class="play" v-if="!play" @click="play_">
         <img :src="stop_i" class="stop" v-else @click="stop">
       </span>
       <span @click="next">
         <img :src="next_i" class="next">
       </span>
       <span>
-        <img :src="musicList_i" class="list">
+        <router-link to="/playlist">
+          <img :src="musicList_i" class="list">
+        </router-link>
       </span>
     </div>
     <audio :src="music_url_default"
@@ -24,6 +26,8 @@
            @ended="next"
             @timeupdate="range"
            id="audio"
+           preload="preload"
+           @progress="co"
     ></audio>
     <div class="panel pa">
       <p class="song_info"
@@ -89,6 +93,9 @@ export default {
         url(){
         	return store.getters.url
         },
+        isPlay(){
+        	return store.getters.isPlay
+        }
   },
   created(){
       this.all()
@@ -100,7 +107,8 @@ export default {
 			    author:this.music_author,
 			    url:this.music_url_default,
 			    length:this.music_len,
-			    index:this.value
+			    index:this.value,
+                isPlay:this.play
 		    })
     },
     watch:{
@@ -112,9 +120,15 @@ export default {
         },
         index(a,b){
           this.value = a
+        },
+        isPlay(a,b){
+        	this.play = a
         }
     },
   methods:{
+    	co(){
+    		console.log('下载中')
+        },
       ...mapActions([
       	'getMusic'
       ]),
@@ -133,31 +147,28 @@ export default {
                   this.music_url_default = this.music_list[roll].url
                   this.music_name = this.music_list[roll].name
                   this.music_author = this.music_list[roll].author
+                  this.play = this.isPlay
               })
       },
       //歌曲信息
       show_music_info(){
           this.music_name = this.music_list[this.value].name
           this.music_author = this.music_list[this.value].author
-//		      this.music_name = this.music_list[this.index].name
-//		      this.music_author = this.music_list[this.index].author
-//          this.music_url_default = this.music_list[this.value].url
-//	      console.log('url:  ' + this.music_list[this.value].url + ';  name:  ' + this.music_name + ';  author:  ' + this.music_author)
       },
       play_(){
 //	      this.getMusic(this.music_list)
-	      this.play = false
+	      this.play = true
           this.$refs.song.play()
       },
       stop(){
-          this.play = true
+          this.play = false
           this.$refs.song.pause()
           clearInterval(this.timer)
       },
       next(){
 	      this.value++
-          setTimeout(()=>{
-              if(this.play != false) this.play = false
+	      setTimeout(()=>{
+              if(this.play != false) this.play = true
               if(this.value >= this.music_list.length) this.value = 0
               this.$refs.song.src = this.music_list[this.value].url
 	          this.show_music_info()
@@ -167,7 +178,7 @@ export default {
       prev(){
 	      this.value--
 	      setTimeout(()=>{
-              if(this.play != false) this.play = false
+              if(this.play != false) this.play = true
               if(this.value < 0) this.value = this.music_len - 1
               this.$refs.song.src = this.music_list[this.value].url
 		      this.show_music_info()
@@ -183,7 +194,7 @@ export default {
               if(progressBar >= 1) {
                   clearInterval(this.timer)
                   this.$refs.range.style.width = 0
-                  this.play = false
+                  this.play = true
               }
           },33)
       }
@@ -235,7 +246,7 @@ export default {
     display: flex;
     justify-content: space-between;
     transition:all .6s cubic-bezier(.4,0,0,1);
-    /*opacity:0;*/
+    opacity:0;
   }
   .control:hover{
       opacity: 1;

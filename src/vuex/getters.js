@@ -31,7 +31,7 @@
 	//当前播放
 	export const index = state => state.music.index
 	//是否处于播放状态
-	export const noplay = state => state.music.noplay
+	export const isPlay = state => state.music.isPlay
 
 //test
 	export const increment = state => state.count

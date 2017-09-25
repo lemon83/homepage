@@ -1,4 +1,7 @@
 	const state = {
+	/*
+	* music
+	* */
 		//logo
 		logo:'data:image/svg+xml;base64,CjxzdmcgdmVyc2lvbj0iMS4xIgogICAgYmFzZVByb2ZpbGU9ImZ1bGwiCiAgICB3aWR0aD0iMTM0\n' +
 		'IiBoZWlnaHQ9IjMwIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCgo8\n' +
@@ -41,8 +44,13 @@
 			author:'',
 			url:'',
 			length:0,
-			noplay:true,
+			isPlay:false,
 		}
+		
+		/*
+		* notes
+		* */
+		
 	}
 	
 	export default state
