@@ -6,23 +6,17 @@
     <right>
     
     </right>
-    <index>
-
-    </index>
   </div>
 </template>
 
 <script>
   import left from './components/Left'
   import right from './view/main'
-  import index from './view/index'
-
+  
   export default {
     components:{
-        left,
+      left,
         right,
-        index
-
     }
   }
 </script>

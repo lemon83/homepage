@@ -13,9 +13,6 @@ import Notes from './view/notes'
 import Music from './view/music'
 import Abuout from './view/about'
 
-//mobile
-import index from './view/index'
-
 Vue.config.productionTip = false
 
 Vue.prototype.$http = axios

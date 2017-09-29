@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import {mapActions,mapMutations,mapGetters} from 'vuex'
+	import {mapActions,mapMutations} from 'vuex'
 	import store from '../vuex/store'
 	//音乐列表
 	export default {
@@ -22,7 +22,6 @@
 		computed:{
 			name(){
 				return store.getters.name
-			
 			},
 			author(){
 				return store.getters.author
@@ -71,7 +70,6 @@
 					index:i,
 					isPlay:this.play
 				})
-				console.log('length',this.ttt)
 			}
 		}
 	}

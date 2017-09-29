@@ -33,8 +33,5 @@
 	//是否处于播放状态
 	export const isPlay = state => state.music.isPlay
 
-	//移动端
-	export const isactive = state => state.isactive
-
 //test
 	export const increment = state => state.count

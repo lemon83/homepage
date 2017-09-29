@@ -45,17 +45,11 @@
 			url:'',
 			length:0,
 			isPlay:false,
-		},
+		}
 		
 		/*
 		* notes
 		* */
-
-
-		/*
-		* 移动端
-		* */
-		isactive:false
 		
 	}
 	

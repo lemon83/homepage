@@ -9,7 +9,6 @@ import Notes from '../view/notes'
 import Music from '../view/music'
 import About from '../view/about'
 
-
 Vue.use(Router)
 
 export default new Router({

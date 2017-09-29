@@ -27,8 +27,3 @@ export const changeIndex = ({commit},payload) =>{
 export const playState = ({commit},payload) =>{
 	commit('playState',payload)
 }
-
-//移动端
-export const changeactive = ({commit},payload) =>{
-	commit('changeactive',payload)
-}

@@ -35,8 +35,3 @@ export const playState = (state,payload) =>{
 	state.music.noplay = payload
 	console.log(state.music.noplay)
 }
-
-//移动端
-export const changeactive = (state,payload) =>{
-	state.isactive = payload
-}

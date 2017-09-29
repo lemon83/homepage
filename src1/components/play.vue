@@ -27,6 +27,7 @@
             @timeupdate="range"
            id="audio"
            preload="preload"
+           @progress="co"
     ></audio>
     <div class="panel pa">
       <p class="song_info"
@@ -125,6 +126,9 @@ export default {
         }
     },
   methods:{
+    	co(){
+    		console.log('下载中')
+        },
       ...mapActions([
       	'getMusic'
       ]),
@@ -152,6 +156,7 @@ export default {
           this.music_author = this.music_list[this.value].author
       },
       play_(){
+//	      this.getMusic(this.music_list)
 	      this.play = true
           this.$refs.song.play()
       },
@@ -268,10 +273,5 @@ export default {
     overflow: hidden;
     white-space:nowrap;
     height: 20px;
-  }
-
-  /* 移动端 */
-  @media (max-width: 768px) {
-
   }
 </style>

@@ -1,13 +1,13 @@
 <template>
   <div class="mask pa">
     <div class="logo text">
-      <router-link to="/" class="index">
-        <img :src="logo" alt="" @click="to_purpose">
+      <router-link to="/" class="index" href="/">
+        <img :src="logo" alt="">
       </router-link>
       <div class="nav tc">
-        <span @click="to_purpose"><router-link to="/">笔记</router-link></span> /
-        <span @click="to_purpose"><router-link to="/playlist">音乐</router-link></span> /
-        <span @click="to_purpose"><router-link to="/about">关于</router-link></span>
+        <router-link to="/">笔记</router-link> /
+        <router-link to="/playlist">音乐</router-link> /
+        <router-link to="/about">关于</router-link>
       </div>
     </div>
     <div class="music-content">
@@ -21,7 +21,6 @@
 <script>
 import music from './play'
 import store from '../vuex/store'
-import {mapMutations} from 'vuex'
 export default {
   name: 'nav',
   components:{
@@ -29,29 +28,18 @@ export default {
   },
     data(){
       return {
-
+          receive:''
       }
     },
     mounted(){
-
+    	this.$on('author',(data) =>{
+    		this.receive = data
+        })
     },
     computed:{
   	  logo(){
   	  	return store.getters.getLogo
       }
-    },
-    methods:{
-        ...mapMutations([
-            'changeactive',
-            {
-                payload(f){
-                    return f
-                }
-            }
-        ]),
-        to_purpose(){
-          this.changeactive(false)
-        },
     }
 }
 </script>
