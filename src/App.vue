@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <left>
+    <left >
     
     </left>
     <right>
@@ -22,8 +22,12 @@
         left,
         right,
         index
-
-    }
+    },
+      data(){
+    	return {
+    		
+        }
+      }
   }
 </script>
 

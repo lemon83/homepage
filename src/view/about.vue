@@ -34,7 +34,7 @@
 			},
 			jian(){
 				this.$store.dispatch('incrementAsync')
-			}
+			},
 		}
 	}
 </script>

@@ -42,7 +42,6 @@
   import {mapActions} from 'vuex'
   import store from '../vuex/store'
 export default {
-	props:['player'],
 	data () {
     return {
       url1:'../../static/music_data.json',
