@@ -46,6 +46,11 @@
 			length:0,
 			isPlay:false,
 		},
+		//2017,11,13
+		gadget:[//小玩意儿
+			{name:'验证码',url:'/identify'},
+			
+		],
 		
 		/*
 		* notes

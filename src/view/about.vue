@@ -1,40 +1,53 @@
 <template>
-	<div>
-		关于我
-		<hr>
-		<button @click="jia">测试按钮+</button>
-		<button @click="jian">测试按钮-</button>
-		<p>{{increment}}</p>
+	<div class="cont">
+		<!--<p>ID为:{{$route.params.id}}</p>-->
+		<p class="menu">
+			<router-link to="/about/identify">验证码</router-link>
+			<router-link to="/about/movie">电影儿</router-link>
+		</p>
+		<router-view>
+		
+		</router-view>
 	</div>
 </template>
 
 <script>
 	import {mapMutations} from 'vuex'
+	import store from '../vuex/store'
+	import identify from '../gadget/identify'
+	
 	export default {
 		name:'about',
+		components:{
+			identify,
+		},
 		data(){
 			return {
-				five:5
+			
 			}
 		},
 		computed:{
-			increment(){
-				return this.$store.getters.increment
+			gadget(){
+			
 			}
 		},
 		methods:{
-			...mapMutations([
-				'changeCount'
-			]),
-			...mapMutations({
-				add:'changeCount'
-			}),
-			jia(){
-				this.add()
-			},
-			jian(){
-				this.$store.dispatch('incrementAsync')
-			},
+			show_identify(){
+			
+			}
+		
 		}
 	}
 </script>
+
+
+<style scoped>
+	.cont{
+		width:100%;
+		height:100%;
+	}
+	.menu{
+		margin-bottom:1.875rem;
+		color:white;
+	}
+</style>

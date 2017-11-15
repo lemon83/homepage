@@ -1,6 +1,6 @@
 <template>
   <div :class="[class_,{'active':isactive}]">
-    <video :src="video_url" autoplay loop></video>
+    <video :src="video_url" autoplay loop playsinline="true"></video>
     <v-nav>
     
     </v-nav>

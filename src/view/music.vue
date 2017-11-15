@@ -86,7 +86,7 @@
 	.playlist{
 		padding: 1.2rem;
 		font-size: 1rem;
-		background-color: rgba(168,216,185,.1);
+		/*background-color: rgba(168,216,185,.1);*/
 	}
 	a{
 		float: left;

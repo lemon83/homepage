@@ -10,6 +10,10 @@ import Music from '../view/music'
 import About from '../view/about'
 
 
+import Identify from '../gadget/identify'
+import Movie from '../gadget/movie'
+import Empty from '../gadget/empty'
+
 Vue.use(Router)
 
 export default new Router({
@@ -17,6 +21,14 @@ export default new Router({
   routes: [
       {path:'/',component:Notes,},
       {path:'/playlist',component:Music,},
-      {path:'/about',component:About,}
+      
+      {
+          path:'/:id',component:About,
+              children:[
+                        {path:'',component:null},
+                        {path:'identify',component:Identify},
+                        {path:'movie',component:Movie}
+              ],
+      }
   ]
 })

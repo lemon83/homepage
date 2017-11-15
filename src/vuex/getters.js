@@ -38,3 +38,6 @@
 
 //test
 	export const increment = state => state.count
+
+//2017,11,13
+	export const gadget = state => state.gadget

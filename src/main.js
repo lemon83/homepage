@@ -13,6 +13,10 @@ import Notes from './view/notes'
 import Music from './view/music'
 import Abuout from './view/about'
 
+import Identify from './gadget/identify'
+import Movie    from './gadget/movie'
+import Empty from './gadget/empty'
+
 //mobile
 import index from './view/index'
 

@@ -1,6 +1,6 @@
 <template>
 	<div class="main pa">
-		<router-view class="router-view" :hehe="da">
+		<router-view class="router-view">
 		
 		</router-view>
 	</div>
@@ -15,11 +15,7 @@
 		},
 		data(){
 			return {
-				da:[
-					{id:1,text:'hello world'},
-					{id:2,text:'hello men'},
-					{id:3,text:'hello yo'}
-				]
+			
 			}
 		}
 	}

@@ -1,14 +1,8 @@
 <template>
   <div id="app">
-    <left >
-    
-    </left>
-    <right>
-    
-    </right>
-    <index>
-
-    </index>
+    <left ></left>
+    <right></right>
+    <index></index>
   </div>
 </template>
 
@@ -37,4 +31,7 @@
   height: 100%;
   overflow: hidden;
 }
+  .router-view{
+    background-color: rgba(22,155,22,.2);
+  }
 </style>

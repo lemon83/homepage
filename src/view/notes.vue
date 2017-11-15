@@ -4,12 +4,7 @@
 			ssh
 		</code>
 		<button @click="show">diN a</button>
-		<ol>
-			<li
-				v-for="item in hehe"
-				:key="item.id"
-			>{{item.id}} : {{item.text}}</li>
-		</ol>
+		
 	</div>
 </template>
 
@@ -22,14 +17,11 @@
 				arr:[]
 			}
 		},
-		props:['hehe'],
 		created(){
 		
 		},
 		methods:{
-			show(){
-				console.log(this.hehe)
-			}
+		
 		}
 	}
 </script>

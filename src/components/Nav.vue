@@ -7,7 +7,7 @@
       <div class="nav tc">
         <span @click="to_purpose"><router-link to="/">笔记</router-link></span> /
         <span @click="to_purpose"><router-link to="/playlist">音乐</router-link></span> /
-        <span @click="to_purpose"><router-link to="/about">关于</router-link></span>
+        <span @click="to_purpose"><router-link to="/about">小玩意儿</router-link></span>
       </div>
     </div>
     <div class="music-content">

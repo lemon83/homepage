@@ -271,6 +271,8 @@ export default {
 
   /* 移动端 */
   @media (max-width: 768px) {
-
+    .control{
+      opacity:1;
+    }
   }
 </style>
